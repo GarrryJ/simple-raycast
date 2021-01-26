@@ -2,6 +2,9 @@ using System;
 
 namespace simple_raycast {
     public class Player {
+        private const double DIR_SPEED = 0.03;
+        private const double DEFAULT_PLAYER_SPEED = 0.1;
+        private const double DEFAULT_PLAYER_DEPTH = 10;
         private double speed;
         private double coorX;
         private double coorY;
@@ -10,38 +13,47 @@ namespace simple_raycast {
         private double depth;
 
         public Player(double x, double y) {
-            this.depth = 30;
-            this.speed = 5;
-            this.fov = 3.14159/3;
+            this.depth = DEFAULT_PLAYER_DEPTH;
+            this.speed = DEFAULT_PLAYER_SPEED;
+            this.fov = Math.PI/3;
             this.coorX = x;
             this.coorY = y;
             this.direction = 0;
         }
 
         public Player(double x, double y, double dir) {
-            this.depth = 30;
-            this.speed = 5;
-            this.fov = 3.14159/3;
+            this.depth = DEFAULT_PLAYER_DEPTH;
+            this.speed = DEFAULT_PLAYER_SPEED;
+            this.fov = Math.PI/3;
             this.coorX = x;
             this.coorY = y;
             this.direction = dir;
         }
 
         public Player(double x, double y, double dir, double fov) {
-            this.depth = 30;
-            this.speed = 5;
+            this.depth = DEFAULT_PLAYER_DEPTH;
+            this.speed = DEFAULT_PLAYER_SPEED;
             this.fov = fov;
             this.coorX = x;
             this.coorY = y;
             this.direction = dir;
         }
 
+        private void checkDirection() {
+            if (this.direction >= Math.PI*2)
+                this.direction = 0;
+            if (this.direction <= -Math.PI*2)
+                this.direction = 0;
+        }
+
         public void turnLeft() {
-            this.direction = this.direction + 1.5;
+            this.direction = this.direction - DIR_SPEED;
+            checkDirection();
         }
 
         public void turnRight() {
-            this.direction = this.direction - 1.5;
+            this.direction = this.direction + DIR_SPEED;
+            checkDirection();
         }
 
         public void goForward() {
