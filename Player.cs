@@ -7,8 +7,10 @@ namespace simple_raycast {
         private double coorY;
         private double fov;
         private double direction;
+        private double depth;
 
         public Player(double x, double y) {
+            this.depth = 30;
             this.speed = 5;
             this.fov = 3.14159/3;
             this.coorX = x;
@@ -17,6 +19,7 @@ namespace simple_raycast {
         }
 
         public Player(double x, double y, double dir) {
+            this.depth = 30;
             this.speed = 5;
             this.fov = 3.14159/3;
             this.coorX = x;
@@ -25,6 +28,7 @@ namespace simple_raycast {
         }
 
         public Player(double x, double y, double dir, double fov) {
+            this.depth = 30;
             this.speed = 5;
             this.fov = fov;
             this.coorX = x;
@@ -74,12 +78,28 @@ namespace simple_raycast {
             this.coorY = y;
         }
 
+        public double getDepth() {
+            return this.depth;
+        }
+
+        public void setDepth(double d) {
+            this.depth = d;
+        }
+
         public double getDirection() {
             return this.direction;
         }
 
         public void setDirection(double dir) {
             this.direction = dir;
+        }
+
+        public double getFOV() {
+            return this.fov;
+        }
+
+        public void setFOV(double fov) {
+            this.fov = fov;
         }
     }
 }
