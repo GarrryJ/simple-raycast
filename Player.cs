@@ -1,11 +1,15 @@
+using System;
+
 namespace simple_raycast {
     public class Player {
+        private double speed;
         private double coorX;
         private double coorY;
         private double fov;
         private double direction;
 
         public Player(double x, double y) {
+            this.speed = 5;
             this.fov = 3.14159/3;
             this.coorX = x;
             this.coorY = y;
@@ -13,6 +17,7 @@ namespace simple_raycast {
         }
 
         public Player(double x, double y, double dir) {
+            this.speed = 5;
             this.fov = 3.14159/3;
             this.coorX = x;
             this.coorY = y;
@@ -20,10 +25,29 @@ namespace simple_raycast {
         }
 
         public Player(double x, double y, double dir, double fov) {
+            this.speed = 5;
             this.fov = fov;
             this.coorX = x;
             this.coorY = y;
             this.direction = dir;
+        }
+
+        public void turnLeft() {
+            this.direction = this.direction + 1.5;
+        }
+
+        public void turnRight() {
+            this.direction = this.direction - 1.5;
+        }
+
+        public void goForward() {
+            this.coorX = this.coorX + (Math.Sin(this.direction) * speed);
+            this.coorY = this.coorY + (Math.Cos(this.direction) * speed);
+        }
+
+        public void goBack() {
+            this.coorX = this.coorX - (Math.Sin(this.direction) * speed);
+            this.coorY = this.coorY - (Math.Cos(this.direction) * speed);
         }
 
         public double getX() {
@@ -32,6 +56,14 @@ namespace simple_raycast {
         
         public void setX(double x) {
             this.coorX = x;
+        }
+
+        public double getSpeed() {
+            return this.speed;
+        }
+        
+        public void setSpeed(double s) {
+            this.speed = s;
         }
 
         public double getY() {
