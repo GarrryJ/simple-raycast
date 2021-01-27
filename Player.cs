@@ -4,7 +4,8 @@ namespace simple_raycast {
     public class Player {
         private const double DIR_SPEED = 0.03;
         private const double DEFAULT_PLAYER_SPEED = 0.1;
-        private const double DEFAULT_PLAYER_DEPTH = 10;
+        private const double DEFAULT_PLAYER_DEPTH = 7;
+        private const double DEFAULT_PLAYER_FOV = Math.PI/3;
         private double speed;
         private double coorX;
         private double coorY;
@@ -15,7 +16,7 @@ namespace simple_raycast {
         public Player(double x, double y) {
             this.depth = DEFAULT_PLAYER_DEPTH;
             this.speed = DEFAULT_PLAYER_SPEED;
-            this.fov = Math.PI/3;
+            this.fov = DEFAULT_PLAYER_FOV;
             this.coorX = x;
             this.coorY = y;
             this.direction = 0;
@@ -24,7 +25,7 @@ namespace simple_raycast {
         public Player(double x, double y, double dir) {
             this.depth = DEFAULT_PLAYER_DEPTH;
             this.speed = DEFAULT_PLAYER_SPEED;
-            this.fov = Math.PI/3;
+            this.fov = DEFAULT_PLAYER_FOV;
             this.coorX = x;
             this.coorY = y;
             this.direction = dir;
