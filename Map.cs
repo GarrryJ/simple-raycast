@@ -4,7 +4,7 @@ namespace simple_raycast {
         private int mapWidth {get; set;}
         private int[] map {get; set;}
 
-        public Map(int h, int w, int[] map) {
+        public Map(int w, int h, int[] map) {
             this.map = map;
             this.mapHeight = h;
             this.mapWidth = w;
