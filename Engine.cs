@@ -42,7 +42,6 @@ namespace simple_raycast {
         }
 
         protected override void LoadContent() {
-            player = new Player(8, 14, 3);
             int[] mapArr = new int[160]
             {
                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -57,13 +56,19 @@ namespace simple_raycast {
                 3, 0, 2, 1, 4, 4, 1, 1, 1, 1,
                 1, 0, 0, 1, 1, 1, 1, 0, 0, 1,
                 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-                1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                1, 0, 0, 0, 0, 0, 0, -1, 0, 1,
                 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
                 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
             };
-            map = new Map(10, 16, mapArr);
 
+            int playerCoor = 0;
+            while (mapArr[playerCoor] != -1)
+                playerCoor++;
+            mapArr[playerCoor] = 0;
+            map = new Map(10, 16, mapArr);
+            player = new Player(playerCoor % map.getMapWidth(), playerCoor / map.getMapWidth(), 3);
+            
             rectangleBlock = new Texture2D(GraphicsDevice, 1, 1);
             Color xnaColorBorder = new Color(255, 255, 255);
             rectangleBlock.SetData(new[] {xnaColorBorder});
