@@ -30,18 +30,18 @@ namespace simple_raycast {
         }
 
         protected override void LoadContent() {
-            player = new Player(1, 4);
+            player = new Player(1, 4, 1.5);
             int[] mapArr = new int[100]
             {
                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                1, 0, 0, 1, 0, 0, 0, 1, 0, 1,
-                1, 0, 0, 1, 0, 1, 0, 1, 0, 1,
-                1, 0, 0, 0, 0, 1, 0, 1, 0, 1,
-                1, 0, 0, 0, 0, 1, 0, 1, 0, 1,
-                1, 0, 0, 0, 0, 1, 0, 1, 0, 1,
-                1, 0, 0, 0, 0, 1, 0, 0, 0, 1,
-                1, 0, 0, 0, 0, 1, 0, 1, 0, 1,
-                1, 0, 0, 0, 0, 1, 0, 1, 0, 1,
+                1, 0, 0, 0, 0, 0, 1, 0, 0, 1,
+                1, 0, 0, 0, 1, 0, 0, 0, 1, 1,
+                1, 0, 0, 0, 0, 0, 1, 0, 0, 1,
+                1, 0, 0, 0, 1, 0, 0, 0, 1, 1,
+                1, 0, 0, 0, 0, 0, 1, 0, 0, 1,
+                1, 0, 0, 0, 1, 0, 0, 0, 1, 1,
+                1, 0, 0, 0, 0, 0, 1, 0, 0, 1,
+                1, 0, 0, 0, 1, 0, 0, 0, 1, 1,
                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
             };
             map = new Map(10, 10, mapArr);
@@ -55,6 +55,8 @@ namespace simple_raycast {
 
         protected override void Update(GameTime gameTime) {
             currentKeyboardState = Keyboard.GetState();
+            if (currentKeyboardState.IsKeyDown(Keys.Escape))
+                Exit();
             if (currentKeyboardState.IsKeyDown(Keys.D))
                 player.turnRight();
             if (currentKeyboardState.IsKeyDown(Keys.A))
@@ -79,9 +81,9 @@ namespace simple_raycast {
             GraphicsDevice.Clear(Color.Black);
             _spriteBatch.Begin();
 
-            for (int x = 5; x < WINDOW_WIDTH; x += 10) {
+            for (int x = 0; x < WINDOW_WIDTH; x += 5) {
                 double rayAngle = (player.getDirection() - player.getFOV()/2) + (((double)x / WINDOW_WIDTH) * player.getFOV());
-                double step = 0.1;
+                double step = 0.05;
                 double distanceToWall = 0.0;
                 bool hitWall = false;
 
@@ -105,29 +107,11 @@ namespace simple_raycast {
                 int ceiling = (int)((WINDOW_HEIGHT/2) - WINDOW_HEIGHT/distanceToWall);
                 int floor = WINDOW_HEIGHT - ceiling;
 
-                Color color;
+                Color color = new Color((int)((float)255 -  ((float)255 * (distanceToWall/player.getDepth()) )), 0, 0);
 
-                if (distanceToWall <= player.getDepth()/10) {
-                    color = new Color(255, 0, 0);
-                } else if (distanceToWall <= player.getDepth()/8) {
-                    color = new Color(224, 0, 0);
-                } else if (distanceToWall <= player.getDepth()/6) {
-                    color = new Color(193, 0, 0);
-                } else if (distanceToWall <= player.getDepth()/5) {
-                    color = new Color(162, 0, 0);
-                } else if (distanceToWall <= player.getDepth()/3) {
-                    color = new Color(131, 0, 0);
-                } else if (distanceToWall <= player.getDepth()/1.5) {
-                    color = new Color(100, 0, 0);
-                } else if (distanceToWall <= player.getDepth()) {
-                    color = new Color(69, 0, 0);
-                } else {
-                    color = new Color(31, 0, 0);
-                }
-
-                _spriteBatch.Draw(rectangleBlock, new Rectangle(x, 0, 10, ceiling), Color.Black);
-                _spriteBatch.Draw(rectangleBlock, new Rectangle(x, ceiling, 10, floor - ceiling), color);
-                _spriteBatch.Draw(rectangleBlock, new Rectangle(x, floor, 10, WINDOW_HEIGHT - floor), Color.Gray);
+                _spriteBatch.Draw(rectangleBlock, new Rectangle(x, 0, 5, ceiling), Color.Black);
+                _spriteBatch.Draw(rectangleBlock, new Rectangle(x, ceiling, 5, floor - ceiling), color);
+                _spriteBatch.Draw(rectangleBlock, new Rectangle(x, floor, 5, WINDOW_HEIGHT - floor), Color.Gray);
             }
 
             _spriteBatch.End();
